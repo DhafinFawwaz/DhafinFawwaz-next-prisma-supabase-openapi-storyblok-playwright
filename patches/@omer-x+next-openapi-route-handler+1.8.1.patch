@@ -1,0 +1,19 @@
+diff --git a/node_modules/@omer-x/next-openapi-route-handler/dist/index.cjs b/node_modules/@omer-x/next-openapi-route-handler/dist/index.cjs
+index fae5e26..b51ff04 100644
+--- a/node_modules/@omer-x/next-openapi-route-handler/dist/index.cjs
++++ b/node_modules/@omer-x/next-openapi-route-handler/dist/index.cjs
+@@ -89,6 +89,14 @@ function convertToOpenAPI(schema, isArray) {
+ // src/core/content.ts
+ function resolveContent(source, isArray = false, isFormData = false, customExample, customExamples) {
+   if (!source) return void 0;
++  if(typeof source === "string" && source.includes("<html")) return {
++    ["text/html"]: {
++      schema: {
++        type: "html",
++        format: source
++      }
++    }
++  }
+   const schema = typeof source === "string" ? createSchemaRef(source, isArray) : convertToOpenAPI(source, isArray);
+   return {
+     [isFormData ? "multipart/form-data" : "application/json"]: createMediaType(schema, customExample, customExamples)

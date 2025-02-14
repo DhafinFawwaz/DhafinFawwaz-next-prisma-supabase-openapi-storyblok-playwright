@@ -1,0 +1,15 @@
+diff --git a/node_modules/@omer-x/next-openapi-json-generator/dist/index.js b/node_modules/@omer-x/next-openapi-json-generator/dist/index.js
+index f438816..6683327 100644
+--- a/node_modules/@omer-x/next-openapi-json-generator/dist/index.js
++++ b/node_modules/@omer-x/next-openapi-json-generator/dist/index.js
+@@ -404,7 +404,9 @@ async function generateOpenApiSpec(schemas, {
+   const appFolderPath = await findAppFolderPath();
+   if (!appFolderPath) throw new Error("This is not a Next.js application!");
+   const rootPath = additionalRootPath ? path4.resolve(appFolderPath, "./" + additionalRootPath) : appFolderPath;
+-  const routes = await getDirectoryItems(rootPath, "route.ts");
++  let routes = await getDirectoryItems(rootPath, "route.ts");
++  const page_routes = await getDirectoryItems(rootPath, "route.doc.ts");
++  routes = routes.concat(page_routes);
+   const verifiedRoutes = filterDirectoryItems(rootPath, routes, verifiedOptions.include, verifiedOptions.exclude);
+   const validRoutes = [];
+   for (const route of verifiedRoutes) {
